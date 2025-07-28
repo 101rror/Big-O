@@ -100,8 +100,8 @@ public static int binarySearch(int[] arr, int target) {
         {/* Line Numbers */}
         <div
           ref={lineNumbersRef}
-          className="bg-slate-100 dark:bg-slate-700 text-slate-400 dark:text-slate-500 text-xs select-none overflow-hidden text-right px-2 py-2"
-          style={{ width: '50px', overflowY: 'hidden', lineHeight: '1.5rem' }}
+          className="bg-slate-100 dark:bg-slate-700 text-slate-400 dark:text-slate-500 text-xs select-none overflow-hidden text-right px-2"
+          style={{ width: '50px', overflowY: 'hidden', lineHeight: '1.5rem', paddingTop: '0.75rem' }}
         >
           {Array.from({ length: lineCount }).map((_, index) => (
             <div key={index} style={{ height: '1.5rem' }}>
@@ -118,7 +118,7 @@ public static int binarySearch(int[] arr, int target) {
           onKeyDown={handleKeyDown}
           onScroll={handleScroll}
           placeholder={getPlaceholder()}
-          className="flex-1 resize-none p-4 outline-none text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-800 leading-relaxed"
+          className="flex-1 resize-none px-4 py-3 outline-none text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-800 leading-relaxed"
           style={{
             lineHeight: '1.5rem',
             overflowY: 'auto',
@@ -129,7 +129,8 @@ public static int binarySearch(int[] arr, int target) {
       {/* Stats + Button */}
       <div className="flex items-center justify-between">
         <div className="text-sm text-slate-600 dark:text-slate-400">
-          Lines: {lineCount} | Characters: {code.length}
+          <div>Lines: {lineCount}</div>
+          <div>Characters: {code.length}</div>
         </div>
 
         <button
