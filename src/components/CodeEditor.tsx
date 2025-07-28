@@ -135,7 +135,7 @@ public static int binarySearch(int[] arr, int target) {
         <button
           onClick={onAnalyze}
           disabled={isAnalyzing || !code.trim()}
-          className="flex items-center space-x-2 px-6 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg hover:from-blue-700 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-105"
+          className="flex items-center space-x-2 px-2 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg hover:from-blue-700 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-105"
         >
           {isAnalyzing ? (
             <>
