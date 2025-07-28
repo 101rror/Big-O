@@ -7,12 +7,10 @@ interface LanguageSelectorProps {
 }
 
 const languages = [
-  { value: 'javascript', label: 'JavaScript', icon: '🟨' },
+  { value: 'cpp', label: 'C++', icon: '⚡' },
   { value: 'python', label: 'Python', icon: '🐍' },
   { value: 'java', label: 'Java', icon: '☕' },
-  { value: 'cpp', label: 'C++', icon: '⚡' },
-  { value: 'typescript', label: 'TypeScript', icon: '🔷' },
-  { value: 'csharp', label: 'C#', icon: '🔵' }
+  { value: 'javascript', label: 'JavaScript', icon: '🟨' },
 ];
 
 export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
