@@ -10,7 +10,7 @@ const languages = [
   { value: 'cpp', label: 'C++', icon: '⚡' },
   { value: 'python', label: 'Python', icon: '🐍' },
   { value: 'java', label: 'Java', icon: '☕' },
-  { value: 'javascript', label: 'JavaScript', icon: '🟨' },
+  { value: 'javascript', label: 'JavaScript', icon: '🟨' }
 ];
 
 export const LanguageSelector: React.FC<LanguageSelectorProps> = ({

@@ -1,5 +1,7 @@
 import { Header } from './components/Header';
 import { CodeEditor } from './components/CodeEditor';
+import { ComplexityAnalysis } from './components/ComplexityAnalysis';
+import { CodeSuggestions } from './components/CodeSuggestions';
 import { LanguageSelector } from './components/LanguageSelector';
 import { useCodeAnalysis } from './hooks/useCodeAnalysis';
 
@@ -9,6 +11,7 @@ function App() {
     setCode,
     language,
     setLanguage,
+    analysis,
     isAnalyzing,
     analyzeCode
   } = useCodeAnalysis();
@@ -35,6 +38,24 @@ function App() {
                 isAnalyzing={isAnalyzing}
               />
             </div>
+          </div>
+
+          {/* Analysis Results Section */}
+          <div className="xl:col-span-1 space-y-6">
+            <ComplexityAnalysis 
+              analysis={analysis} 
+              isAnalyzing={isAnalyzing}
+              hasCode={code.trim().length > 0}
+            />
+          </div>
+
+          {/* Code Suggestions Section */}
+          <div className="xl:col-span-1 space-y-6">
+            <CodeSuggestions 
+              analysis={analysis}
+              language={language}
+              hasCode={code.trim().length > 0}
+            />
           </div>
         </div>
       </main>

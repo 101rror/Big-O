@@ -1,22 +1,27 @@
 import { useState } from 'react';
+import type { AnalysisResult } from '../types/analysis';
+import { analyzeComplexity } from '../utils/complexityAnalyzer';
 
-export function useCodeAnalysis() {
+export const useCodeAnalysis = () => {
   const [code, setCode] = useState('');
   const [language, setLanguage] = useState('c++');
-  const [analysis, setAnalysis] = useState<string | null>(null);
+  const [analysis, setAnalysis] = useState<AnalysisResult | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
 
   const analyzeCode = async () => {
+    if (!code.trim()) return;
+    
     setIsAnalyzing(true);
-
-    // Simulate API delay
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    // Dummy analysis result
-    const result = `Time Complexity: O(n)\nSpace Complexity: O(1)\nLanguage: ${language}`;
-    setAnalysis(result);
-
-    setIsAnalyzing(false);
+    
+    try {
+      const result = await analyzeComplexity(code, language);
+      setAnalysis(result);
+    } catch (error) {
+      console.error('Analysis failed:', error);
+      setAnalysis(null);
+    } finally {
+      setIsAnalyzing(false);
+    }
   };
 
   return {
@@ -28,4 +33,4 @@ export function useCodeAnalysis() {
     isAnalyzing,
     analyzeCode
   };
-}
+};
