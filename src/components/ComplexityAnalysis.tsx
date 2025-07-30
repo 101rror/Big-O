@@ -91,10 +91,12 @@ export const ComplexityAnalysis: React.FC<ComplexityAnalysisProps> = ({
           </div>
         </div>
 
-        <ComplexityVisualization 
-          timeComplexity={analysis.timeComplexity}
-          spaceComplexity={analysis.spaceComplexity}
-        />
+        <div className="mt-12 mb-10">
+          <ComplexityVisualization 
+            timeComplexity={analysis.timeComplexity}
+            spaceComplexity={analysis.spaceComplexity}
+          />
+        </div>
       </div>
 
       {/* Detailed Explanation */}
