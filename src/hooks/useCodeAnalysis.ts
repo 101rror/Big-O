@@ -4,7 +4,7 @@ import { analyzeComplexity } from '../utils/complexityAnalyzer';
 
 export const useCodeAnalysis = () => {
   const [code, setCode] = useState('');
-  const [language, setLanguage] = useState('javascript');
+  const [language, setLanguage] = useState('c++');
   const [analysis, setAnalysis] = useState<AnalysisResult | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
 
