@@ -10,7 +10,6 @@ export const analyzeComplexity = async (code: string, language: string): Promise
       spaceComplexity: result.spaceComplexity,
       explanation: result.explanation,
       suggestions: result.suggestions,
-      optimizedCode: result.optimizedCode,
       confidence: result.confidence
     };
   } catch (error) {

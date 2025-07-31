@@ -1,4 +1,4 @@
-interface OpenAIResponse {
+interface DeepSeekResponse {
   timeComplexity: string;
   spaceComplexity: string;
   explanation: {
@@ -11,95 +11,90 @@ interface OpenAIResponse {
 }
 
 export const analyzeCodeWithOpenAI = async (
-  code: string, 
+  code: string,
   language: string
-): Promise<OpenAIResponse> => {
-  const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
-  
+): Promise<DeepSeekResponse> => {
+  const apiKey = import.meta.env.VITE_OPENROUTER_API_KEY;
+
   if (!apiKey) {
-    throw new Error('OpenAI API key is not configured. Please add VITE_OPENAI_API_KEY to your environment variables.');
+    throw new Error(
+      'OpenRouter API key is missing. Add VITE_OPENROUTER_API_KEY to your .env file.'
+    );
   }
 
-  const prompt = `Analyze the following ${language} code for time and space complexity. Provide a detailed analysis in JSON format with the following structure:
+  const prompt = `
+You are an expert in analyzing code complexity. Given the following ${language} code, analyze and return ONLY a pure JSON response following this structure (no markdown, no explanation, no code blocks):
 
 {
-  "timeComplexity": "Big-O notation (e.g., O(n), O(log n), O(n²))",
-  "spaceComplexity": "Big-O notation for space usage",
+  "timeComplexity": "O(n)",
+  "spaceComplexity": "O(1)",
   "explanation": {
-    "time": "Detailed explanation of why this time complexity",
-    "space": "Detailed explanation of why this space complexity"
+    "time": "Explain time complexity here...",
+    "space": "Explain space complexity here..."
   },
-  "suggestions": ["Array of 3-5 optimization suggestions"],
-  "optimizedCode": "Improved version of the code (if applicable)",
-  "confidence": 0.95
+  "suggestions": ["Suggestion 1", "Suggestion 2"],
+  "confidence": 0.9
 }
 
-Code to analyze:
-\`\`\`${language}
+Do not include any extra text, formatting, or markdown. Only return valid JSON.
+
+Code:
 ${code}
-\`\`\`
-
-Please provide accurate Big-O analysis considering:
-1. Loop structures and nesting
-2. Recursive calls and their depth
-3. Data structure operations
-4. Algorithm patterns (sorting, searching, etc.)
-5. Memory allocation and usage
-
-Be precise with the complexity notation and provide actionable optimization suggestions.`;
+`;
 
   try {
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
         'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+        'HTTP-Referer': 'http://localhost:5173',
+        'X-Title': 'Big-O Complexity Analyzer',
       },
       body: JSON.stringify({
-        model: 'gpt-4',
+        model: 'deepseek/deepseek-r1-0528:free',
         messages: [
-          {
-            role: 'system',
-            content: 'You are an expert computer science professor specializing in algorithm analysis and Big-O complexity. Provide accurate, detailed complexity analysis in the requested JSON format.'
-          },
-          {
-            role: 'user',
-            content: prompt
-          }
+          { role: 'system', content: 'You are a code analysis expert. Return only JSON.' },
+          { role: 'user', content: prompt }
         ],
-        temperature: 0.1,
-        max_tokens: 2000,
+        temperature: 0.2,
+        max_tokens: 3500,
       }),
     });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(`OpenAI API error: ${errorData.error?.message || 'Unknown error'}`);
-    }
-
     const data = await response.json();
-    const content = data.choices[0]?.message?.content;
+    console.log('📦 OpenRouter raw response:', data);
 
-    if (!content) {
-      throw new Error('No response content from OpenAI');
+    if (!response.ok) {
+      throw new Error(`OpenRouter API error: ${data?.error?.message || 'Unknown error'}`);
     }
 
-    // Extract JSON from the response
-    const jsonMatch = content.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) {
-      throw new Error('Invalid JSON response from OpenAI');
+    const content = data.choices?.[0]?.message?.content;
+    console.log('📝 Raw content:', content);
+
+    if (!content || content.trim() === '') {
+      throw new Error('Empty response from OpenRouter — possibly due to long input or timeout.');
     }
 
-    const analysisResult = JSON.parse(jsonMatch[0]);
-    
-    // Validate the response structure
-    if (!analysisResult.timeComplexity || !analysisResult.spaceComplexity) {
-      throw new Error('Invalid analysis result structure');
+    const codeBlockMatch = content.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
+    let jsonString = '';
+
+    if (codeBlockMatch) {
+      jsonString = codeBlockMatch[1];
+    } else {
+      const fallbackMatch = content.match(/\{[\s\S]*\}/);
+      if (fallbackMatch) {
+        jsonString = fallbackMatch[0];
+      } else {
+        throw new Error('Failed to extract JSON from model output');
+      }
     }
 
-    return analysisResult;
+    const parsed = JSON.parse(jsonString);
+    console.log('✅ Parsed JSON:', parsed);
+    return parsed;
   } catch (error) {
-    console.error('OpenAI API Error:', error);
+    console.error('❌ OpenRouter / DeepSeek error:', error);
     throw error;
   }
 };
