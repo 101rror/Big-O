@@ -142,9 +142,6 @@ export const ComplexityAnalysis: React.FC<ComplexityAnalysisProps> = ({
                 Confidence: {Math.round(analysis.confidence * 100)}%
               </span>
             </div>
-            <p className="text-xs text-blue-600 dark:text-blue-400 mt-1 transition-colors duration-200">
-              Analysis powered by AI complexity detection
-            </p>
           </div>
         </div>
       </div>
