@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 
-
 @keyframes rotate-clockwise {
   from {
     transform: rotate(0deg);
@@ -13,6 +12,6 @@
   }
 }
 
-.animate-rotate-clockwise {
+.logo-animation {
   animation: rotate-clockwise 4s linear infinite;
 }

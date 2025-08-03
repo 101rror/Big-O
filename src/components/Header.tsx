@@ -8,7 +8,7 @@ export const Header: React.FC = () => {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center space-x-3">
             <div className="flex items-center justify-center w-10 h-10 bg-white rounded-full">
-              <img src="/red-circle.png" alt="Big-O Logo" className="w-10 h-10 object-contain animate-rotate-clockwise" />
+              <img src="/red-circle.png" alt="Big-O Logo" className="w-10 h-10 object-contain logo-animation" />
             </div>
 
             <div>
