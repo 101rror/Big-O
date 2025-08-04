@@ -18,7 +18,7 @@ export const analyzeCodeWithOpenAI = async (
 
   if (!apiKey) {
     throw new Error(
-      'OpenRouter API key is missing. Add VITE_OPENROUTER_API_KEY to your .env file.'
+      'OpenRouter API key is missing. Add API KEY to your .env file.'
     );
   }
 

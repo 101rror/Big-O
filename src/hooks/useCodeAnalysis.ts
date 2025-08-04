@@ -30,11 +30,10 @@ export const useCodeAnalysis = () => {
         timeComplexity: 'Error',
         spaceComplexity: 'Error',
         explanation: {
-          time: error instanceof Error ? error.message : 'Analysis failed. Please check your OpenAI API key and try again.',
+          time: error instanceof Error ? error.message : 'Analysis failed. Please try again later.',
           space: 'Unable to analyze space complexity due to API error.'
         },
         suggestions: [
-          'Verify your OpenAI API key is correctly set in environment variables',
           'Check your internet connection',
           'Ensure your code is syntactically correct'
         ],

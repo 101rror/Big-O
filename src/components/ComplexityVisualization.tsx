@@ -5,7 +5,7 @@ interface ComplexityVisualizationProps {
   spaceComplexity: string;
 }
 
-const complexityOrder = ['O(1)', 'O(log n)', 'O(n)', 'O(n log n)', 'O(n²)', 'O(n³)', 'O(2^n)', 'O(n⋅2^n)', 'O(n!)'];
+const complexityOrder = ['O(1)', 'O(log n)', 'O(n)', 'O(n log n)', 'O(n²)', 'O(n³)', 'O(2ⁿ)', 'O(n⋅2ⁿ)', 'O(n!)'];
 
 const getComplexityScore = (complexity: string): number => {
   const index = complexityOrder.indexOf(complexity);

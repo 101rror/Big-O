@@ -1,5 +1,13 @@
-import React, { useRef } from 'react';
+import React from 'react';
+import CodeMirror from '@uiw/react-codemirror';
+import { javascript } from '@codemirror/lang-javascript';
+import { java } from '@codemirror/lang-java';
+import { python } from '@codemirror/lang-python';
+import { cpp } from '@codemirror/lang-cpp';
+import { oneDark } from '@codemirror/theme-one-dark';
+import { githubLight } from '@uiw/codemirror-theme-github';
 import { Play, Loader2 } from 'lucide-react';
+import { useTheme } from '../contexts/ThemeContext'; // ✅ use your exact path
 
 interface CodeEditorProps {
   code: string;
@@ -16,120 +24,41 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
   onAnalyze,
   isAnalyzing,
 }) => {
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const lineNumbersRef = useRef<HTMLDivElement>(null);
+  const { theme } = useTheme();
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Tab') {
-      e.preventDefault();
-      const textarea = e.target as HTMLTextAreaElement;
-      const start = textarea.selectionStart;
-      const end = textarea.selectionEnd;
-      const newValue = code.substring(0, start) + '  ' + code.substring(end);
-      onChange(newValue);
-
-      setTimeout(() => {
-        textarea.selectionStart = textarea.selectionEnd = start + 2;
-      }, 0);
-    }
-  };
-
-  const handleScroll = () => {
-    if (textareaRef.current && lineNumbersRef.current) {
-      lineNumbersRef.current.scrollTop = textareaRef.current.scrollTop;
-    }
-  };
-
-  const getPlaceholder = () => {
+  const getLanguageExtension = () => {
     switch (language) {
-      case 'cpp':
-        return `// Example: Binary Search
-int binarySearch(const std::vector<int>& arr, int target) {
-  int left = 0;
-  int right = arr.size() - 1;
-
-  while (left <= right) {
-    int mid = left + (right - left) / 2; // avoids overflow
-    if (arr[mid] == target) return mid;
-    if (arr[mid] < target) left = mid + 1;
-    else right = mid - 1;
-  }
-
-  return -1;
-}`;
-
       case 'python':
-        return `# Example: Binary Search
-def binary_search(arr, target):
-    left, right = 0, len(arr) - 1
-    
-    while left <= right:
-        mid = (left + right) // 2
-        if arr[mid] == target:
-            return mid
-        elif arr[mid] < target:
-            left = mid + 1
-        else:
-            right = mid - 1
-    return -1`;
+        return python();
       case 'java':
-        return `// Example: Binary Search
-public static int binarySearch(int[] arr, int target) {
-    int left = 0;
-    int right = arr.length - 1;
-    
-    while (left <= right) {
-        int mid = left + (right - left) / 2;
-        if (arr[mid] == target) return mid;
-        if (arr[mid] < target) left = mid + 1;
-        else right = mid - 1;
-    }
-    return -1;
-}`;
+        return java();
+      case 'cpp':
+        return cpp();
+      case 'javascript':
       default:
-        return `// Paste your code here or try the example
-// The analyzer will detect complexity patterns automatically`;
+        return javascript();
     }
   };
-
-  const lineCount = code.split('\n').length;
 
   return (
     <div className="space-y-4">
-      <div className="flex border border-slate-300 dark:border-slate-600 rounded-lg overflow-hidden font-mono text-sm h-80">
-        {/* Line Numbers */}
-        <div
-          ref={lineNumbersRef}
-          className="bg-slate-100 dark:bg-slate-700 text-slate-400 dark:text-slate-500 text-xs select-none overflow-hidden text-right px-2"
-          style={{ width: '50px', overflowY: 'hidden', lineHeight: '1.5rem', paddingTop: '0.75rem' }}
-        >
-          {Array.from({ length: lineCount }).map((_, index) => (
-            <div key={index} style={{ height: '1.5rem' }}>
-              {index + 1}
-            </div>
-          ))}
-        </div>
+      <CodeMirror
+        value={code}
+        height="320px"
+        theme={theme === 'dark' ? oneDark : githubLight}
+        extensions={[getLanguageExtension()]}
+        onChange={(value) => onChange(value)}
+        basicSetup={{
+          lineNumbers: true,
+          highlightActiveLine: true,
+          foldGutter: true,
+        }}
+      />
 
-        {/* Textarea */}
-        <textarea
-          ref={textareaRef}
-          value={code}
-          onChange={(e) => onChange(e.target.value)}
-          onKeyDown={handleKeyDown}
-          onScroll={handleScroll}
-          placeholder={getPlaceholder()}
-          className="flex-1 resize-none px-4 py-3 outline-none text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-800 leading-relaxed"
-          style={{
-            lineHeight: '1.5rem',
-            overflowY: 'auto',
-          }}
-        />
-      </div>
-
-      {/* Stats + Button */}
+      {/* Stats + Analyze Button */}
       <div className="flex items-center justify-between">
         <div className="text-sm text-slate-600 dark:text-slate-400">
-          <div>Lines: {lineCount}</div>
+          <div>Lines: {code.split('\n').length}</div>
           <div>Characters: {code.length}</div>
         </div>
 

@@ -16,7 +16,6 @@ export const LearnPage: React.FC = () => {
               <ArrowLeft className="w-5 h-5" />
               <span>Back to Calculator</span>
             </Link>
-            <h1 className="text-xl font-bold">Learn about Big O</h1>
           </div>
         </div>
       </header>
