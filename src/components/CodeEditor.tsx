@@ -7,7 +7,9 @@ import { cpp } from '@codemirror/lang-cpp';
 import { oneDark } from '@codemirror/theme-one-dark';
 import { githubLight } from '@uiw/codemirror-theme-github';
 import { Play, Loader2 } from 'lucide-react';
-import { useTheme } from '../contexts/ThemeContext'; // ✅ use your exact path
+import { useTheme } from '../contexts/ThemeContext';
+import { placeholder } from '@codemirror/view';
+
 
 interface CodeEditorProps {
   code: string;
@@ -28,12 +30,12 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
 
   const getLanguageExtension = () => {
     switch (language) {
+      case 'cpp':
+        return cpp();
       case 'python':
         return python();
       case 'java':
         return java();
-      case 'cpp':
-        return cpp();
       case 'javascript':
       default:
         return javascript();
@@ -46,14 +48,20 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
         value={code}
         height="320px"
         theme={theme === 'dark' ? oneDark : githubLight}
-        extensions={[getLanguageExtension()]}
+        extensions={[
+          getLanguageExtension(),
+          placeholder('// write or paste your code here'),
+        ]}
         onChange={(value) => onChange(value)}
+        className="rounded-lg overflow-hidden border border-gray-300 dark:border-slate-700"
         basicSetup={{
           lineNumbers: true,
           highlightActiveLine: true,
           foldGutter: true,
         }}
       />
+
+
 
       {/* Stats + Analyze Button */}
       <div className="flex items-center justify-between">
