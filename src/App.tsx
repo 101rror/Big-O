@@ -3,8 +3,10 @@ import { CodeEditor } from './components/CodeEditor';
 import { ComplexityAnalysis } from './components/ComplexityAnalysis';
 import { LanguageSelector } from './components/LanguageSelector';
 import { useCodeAnalysis } from './hooks/useCodeAnalysis';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { LearnPage } from './pages/LearnPage';
 
-function App() {
+function HomePage() {
   const {
     code,
     setCode,
@@ -50,6 +52,17 @@ function App() {
         </div>
       </main>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/learn" element={<LearnPage />} />
+      </Routes>
+    </Router>
   );
 }
 
