@@ -21,7 +21,7 @@ export const Header: React.FC = () => {
                 Big-O
               </h1>
               <p className="text-sm text-slate-600 dark:text-slate-400 transition-colors duration-200">
-                Analyze algorithm efficiency
+                Analyzer
               </p>
             </div>
           </div>
