@@ -187,7 +187,7 @@ export const LearnPage: React.FC = () => {
               <div className="bg-slate-800 rounded-lg p-6 border border-slate-700">
                 <div className="flex items-center space-x-3 mb-3">
                   <div className="w-4 h-4 bg-purple-500 rounded-full"></div>
-                  <h4 className="text-xl font-semibold text-purple-400">O(2^n) - Exponential</h4>
+                  <h4 className="text-xl font-semibold text-purple-400">O(2ⁿ) - Exponential</h4>
                 </div>
                 <p className="text-slate-300">
                   Time doubles with each additional input. Very inefficient.
