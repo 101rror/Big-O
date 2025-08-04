@@ -12,7 +12,7 @@ const GithubIcon = () => (
     xmlns="http://www.w3.org/2000/svg"
     fill="currentColor"
     viewBox="0 0 24 24"
-    className="w-6 h-6 hover:text-purple-400 transition-colors"
+    className="w-6 h-6 hover:text-purple-700 transition-colors"
   >
     <path d="M12 0C5.37 0 0 5.373 0 12a12 12 0 008.207 11.418c.6.112.82-.258.82-.577 0-.285-.01-1.04-.016-2.04-3.338.726-4.042-1.61-4.042-1.61-.546-1.388-1.333-1.757-1.333-1.757-1.09-.745.082-.73.082-.73 1.205.084 1.84 1.238 1.84 1.238 1.07 1.834 2.807 1.304 3.492.997.108-.774.42-1.305.763-1.606-2.665-.303-5.466-1.334-5.466-5.933 0-1.31.467-2.38 1.235-3.22-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.3 1.23a11.52 11.52 0 016 0c2.29-1.552 3.296-1.23 3.296-1.23.654 1.653.243 2.874.12 3.176.77.84 1.232 1.91 1.232 3.22 0 4.61-2.803 5.625-5.475 5.92.43.372.815 1.106.815 2.23 0 1.61-.015 2.91-.015 3.31 0 .322.217.694.825.576A12.004 12.004 0 0024 12c0-6.627-5.373-12-12-12z" />
   </svg>
@@ -24,7 +24,7 @@ const LinkedinIcon = () => (
     xmlns="http://www.w3.org/2000/svg"
     fill="currentColor"
     viewBox="0 0 24 24"
-    className="w-6 h-6 hover:text-pink-400 transition-colors"
+    className="w-6 h-6 hover:text-purple-700 transition-colors"
   >
     <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.76 0 5-2.239 5-5v-14c0-2.761-2.24-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.27c-.966 0-1.75-.79-1.75-1.763 0-.974.784-1.764 1.75-1.764s1.75.79 1.75 1.764c0 .973-.784 1.763-1.75 1.763zm13.5 11.27h-3v-5.5c0-1.32-1.06-2.39-2.36-2.39-1.29 0-2.33.87-2.33 2.1v5.79h-3v-10h3v1.4c.45-.65 1.25-1.4 2.88-1.4 2.6 0 4.62 1.7 4.62 5.33v4.67z" />
   </svg>
@@ -53,7 +53,7 @@ export const LearnPage: React.FC = () => {
         <div className="space-y-12">
           {/* Title */}
           <div className="text-center">
-            <h1 className="text-5xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-8">
+            <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-8">
               Big O Notation
             </h1>
           </div>
@@ -81,7 +81,7 @@ export const LearnPage: React.FC = () => {
             <div className="flex justify-center mt-8">
               <Link 
                 to="/"
-                className="inline-flex items-center space-x-2 px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-medium rounded-lg hover:from-purple-700 hover:to-pink-700 transition-all duration-200 transform hover:scale-105"
+                className="inline-flex items-center space-x-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 transform hover:scale-105"
               >
                 <Calculator className="w-5 h-5" />
                 <span>Calculate Big O</span>
@@ -89,9 +89,119 @@ export const LearnPage: React.FC = () => {
             </div>
           </div>
 
+          {/* Why do we need it? */}
+          <div className="space-y-6">
+            <h2 className="text-3xl font-bold text-purple-700">
+              Why do we need it?
+            </h2>
+            
+            <p className="text-lg text-slate-300">
+              We need Big O notation for several reasons:
+            </p>
+
+            <ul className="space-y-4 text-lg text-slate-300">
+              <li className="flex items-start space-x-3">
+                <span className="w-2 h-2 bg-blue-400 rounded-full mt-3 flex-shrink-0"></span>
+                <span>
+                  Big O notation provides a standardized way to describe the performance of an algorithm in terms 
+                  of the input size.
+                </span>
+              </li>
+              <li className="flex items-start space-x-3">
+                <span className="w-2 h-2 bg-blue-400 rounded-full mt-3 flex-shrink-0"></span>
+                <span>
+                  We can compare the performance of different algorithms and choose the one that is most 
+                  appropriate for a given problem.
+                </span>
+              </li>
+              <li className="flex items-start space-x-3">
+                <span className="w-2 h-2 bg-blue-400 rounded-full mt-3 flex-shrink-0"></span>
+                <span>
+                  Identify areas where we can optimize an algorithm and improve its performance.
+                </span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Complexity */}
+          <div className="space-y-6">
+            <h2 className="text-3xl font-bold text-purple-700">
+              Complexity
+            </h2>
+            
+            <p className="text-lg text-slate-300 leading-relaxed">
+              Understanding time and space complexity is critical for designing and analyzing algorithms. In most 
+              cases, we want to design algorithms that are both time and space-efficient. However, there is often a 
+              trade-off between time and space complexity. An algorithm that is fast may require more memory, 
+              while an algorithm that uses less memory may be slower.
+            </p>
+          </div>
+
+          {/* Time Complexity */}
+          <div className="space-y-6">
+            <h3 className="text-xl font-bold text-purple-700">
+              Time Complexity
+            </h3>
+            
+            <p className="text-lg text-slate-300">
+              Time complexity refers to the amount of time it takes for an algorithm to run.
+            </p>
+
+            <p className="text-lg text-slate-300 leading-relaxed">
+              For example, if an algorithm has a time complexity of O(n), it means that the algorithm's running time 
+              will grow linearly with the input size. If the input size doubles, the algorithm's running time will also 
+              double.
+            </p>
+          </div>
+
+          {/* Space Complexity */}
+          <div className="space-y-6">
+            <h3 className="text-xl font-bold text-purple-700">
+              Space Complexity
+            </h3>
+            
+            <p className="text-lg text-slate-300">
+              Space complexity refers to the amount of memory an algorithm needs to execute.
+            </p>
+
+            <p className="text-lg text-slate-300 leading-relaxed">
+              For example, an algorithm with a space complexity of O(n) means that the amount of memory required by the algorithm will grow linearly with the input size.
+            </p>
+          </div>
+
+          <div className="space-y-6">
+            <h2 className="text-3xl font-bold text-purple-700">
+              Types of Complexity
+            </h2>
+
+            {/* Chart with legend */}
+            <div className='flex flex-col sm:flex-row gap-4'>
+              <figure>
+                <img
+                  src="/complexity-chart.png"
+                  className="text-center text-white"
+                  alt="Big O Complexity Chart"
+                  width="500px"
+                  height="20px"
+                />
+                <figcaption className="text-white text-center">
+                  Big O Complexity Chart
+                </figcaption>
+              </figure>
+
+              <div className='flex flex-col gap-6'>
+                <span className='px-5 py-2 rounded-sm bg-red-500 text-black'>Horrible</span>
+                <span className='px-5 py-2 rounded-sm bg-orange-500 text-black'>Bad</span>
+                <span className='px-5 py-2 rounded-sm bg-yellow-500 text-black'>Fair</span>
+                <span className='px-5 py-2 rounded-sm bg-green-500 text-black'>Good</span>
+                <span className='px-5 py-2 rounded-sm bg-green-400 text-black'>Excellent</span>
+              </div>
+            </div>
+          </div>
+
           {/* Common Complexities */}
           <div className="space-y-6">
-            <h3 className="text-2xl font-bold text-pink-400">
+            <h3 className="text-3xl font-bold text-purple-700">
               Common Time Complexities
             </h3>
             
@@ -212,71 +322,6 @@ export const LearnPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Why do we need it? */}
-          <div className="space-y-6">
-            <h2 className="text-3xl font-bold text-pink-400">
-              Why do we need it?
-            </h2>
-            
-            <p className="text-lg text-slate-300">
-              We need Big O notation for several reasons:
-            </p>
-
-            <ul className="space-y-4 text-lg text-slate-300">
-              <li className="flex items-start space-x-3">
-                <span className="w-2 h-2 bg-purple-400 rounded-full mt-3 flex-shrink-0"></span>
-                <span>
-                  Big O notation provides a standardized way to describe the performance of an algorithm in terms 
-                  of the input size.
-                </span>
-              </li>
-              <li className="flex items-start space-x-3">
-                <span className="w-2 h-2 bg-purple-400 rounded-full mt-3 flex-shrink-0"></span>
-                <span>
-                  We can compare the performance of different algorithms and choose the one that is most 
-                  appropriate for a given problem.
-                </span>
-              </li>
-              <li className="flex items-start space-x-3">
-                <span className="w-2 h-2 bg-purple-400 rounded-full mt-3 flex-shrink-0"></span>
-                <span>
-                  Identify areas where we can optimize an algorithm and improve its performance.
-                </span>
-              </li>
-            </ul>
-          </div>
-
-          {/* Complexity */}
-          <div className="space-y-6">
-            <h2 className="text-3xl font-bold text-pink-400">
-              Complexity
-            </h2>
-            
-            <p className="text-lg text-slate-300 leading-relaxed">
-              Understanding time and space complexity is critical for designing and analyzing algorithms. In most 
-              cases, we want to design algorithms that are both time and space-efficient. However, there is often a 
-              trade-off between time and space complexity. An algorithm that is fast may require more memory, 
-              while an algorithm that uses less memory may be slower.
-            </p>
-          </div>
-
-          {/* Time Complexity */}
-          <div className="space-y-6">
-            <h3 className="text-2xl font-bold text-pink-400">
-              Time Complexity
-            </h3>
-            
-            <p className="text-lg text-slate-300">
-              Time complexity refers to the amount of time it takes for an algorithm to run.
-            </p>
-
-            <p className="text-lg text-slate-300 leading-relaxed">
-              For example, if an algorithm has a time complexity of O(n), it means that the algorithm's running time 
-              will grow linearly with the input size. If the input size doubles, the algorithm's running time will also 
-              double.
-            </p>
-          </div>
-
           {/* Call to Action */}
           <div className="text-center py-12">
             <div className="bg-gradient-to-r from-purple-900/50 to-pink-900/50 rounded-xl p-8 border border-purple-500/20">
@@ -288,7 +333,7 @@ export const LearnPage: React.FC = () => {
               </p>
               <Link 
                 to="/"
-                className="inline-flex items-center space-x-2 px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-medium rounded-lg hover:from-purple-700 hover:to-pink-700 transition-all duration-200 transform hover:scale-105"
+                className="inline-flex items-center space-x-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg hover:from-purple-700 hover:to-pink-700 transition-all duration-200 transform hover:scale-105"
               >
                 <Calculator className="w-5 h-5" />
                 <span>Calculate Big O</span>
@@ -310,7 +355,7 @@ export const LearnPage: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="LinkedIn"
-                  className="hover:text-pink-400 transition-colors"
+                  className="hover:text-purple-400 transition-colors"
                 >
                   <LinkedinIcon />
                 </a>
