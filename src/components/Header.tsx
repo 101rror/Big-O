@@ -1,11 +1,15 @@
 import React from 'react';
-import { ThemeToggle } from './ThemeToggle';
-import { Link, useLocation } from 'react-router-dom';
 import { BookOpen } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+import { ThemeToggle } from './ThemeToggle';
+import { LoginButton } from './LoginButton';
+import { AuthModal } from './AuthModal';
 
 export const Header: React.FC = () => {
   const location = useLocation();
   const isLearnPage = location.pathname === '/learn';
+  
+  const [showAuthModal, setShowAuthModal] = React.useState(false);
 
   return (
     <header className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 shadow-sm transition-colors duration-200">
@@ -37,9 +41,15 @@ export const Header: React.FC = () => {
               </Link>
             )}
             <ThemeToggle />
+            <LoginButton onLoginClick={() => setShowAuthModal(true)} />
           </div>
         </div>
       </div>
+
+      <AuthModal 
+        isOpen={showAuthModal} 
+        onClose={() => setShowAuthModal(false)} 
+      />
     </header>
   );
 };

@@ -1,9 +1,11 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ThemeProvider } from './contexts/ThemeContext';
+import { AuthProvider } from './contexts/AuthContext';
 import { Header } from './components/Header';
 import { CodeEditor } from './components/CodeEditor';
 import { ComplexityAnalysis } from './components/ComplexityAnalysis';
 import { LanguageSelector } from './components/LanguageSelector';
 import { useCodeAnalysis } from './hooks/useCodeAnalysis';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { LearnPage } from './pages/LearnPage';
 
 function HomePage() {
@@ -20,7 +22,7 @@ function HomePage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 transition-colors duration-200">
       <Header />
-      
+
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 h-full">
           {/* Code Input Section */}
@@ -30,7 +32,7 @@ function HomePage() {
                 <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-100">Code Input</h2>
                 <LanguageSelector value={language} onChange={setLanguage} />
               </div>
-              
+
               <CodeEditor
                 code={code}
                 onChange={setCode}
@@ -43,8 +45,8 @@ function HomePage() {
 
           {/* Analysis Results Section */}
           <div className="space-y-6 h-full">
-            <ComplexityAnalysis 
-              analysis={analysis} 
+            <ComplexityAnalysis
+              analysis={analysis}
               isAnalyzing={isAnalyzing}
               hasCode={code.trim().length > 0}
             />
@@ -57,12 +59,16 @@ function HomePage() {
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/learn" element={<LearnPage />} />
-      </Routes>
-    </Router>
+    <ThemeProvider>
+      <AuthProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/learn" element={<LearnPage />} />
+          </Routes>
+        </Router>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 
