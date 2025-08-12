@@ -114,7 +114,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         {step === 'login' && (
           <div className="space-y-6">
             <div className="text-center">
-              <h2 className="text-2xl font-bold text-emerald-400 mb-2">Login to Big(O) Calculator</h2>
+              <h2 className="text-2xl font-bold text-purple-400 mb-2">Login to Big(O) Calculator</h2>
               <p className="text-slate-300">Enter your email to receive a verification code</p>
             </div>
 
@@ -143,7 +143,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             <div className="text-center">
               <button
                 onClick={() => setStep('subscribe')}
-                className="text-emerald-400 hover:text-emerald-300 text-sm transition-colors"
+                className="text-purple-400 hover:text-purple-300 text-sm transition-colors"
               >
                 Don't have an account? Subscribe here
               </button>
@@ -179,7 +179,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             </form>
 
             <div className="flex items-center justify-center">
-              <div className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-full">
+              <div className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full">
                 <Coffee className="w-5 h-5" />
                 <span className="font-medium">1 Coffee/month ($5) FREE Now!</span>
               </div>
@@ -188,7 +188,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             <div className="text-center">
               <button
                 onClick={() => setStep('login')}
-                className="text-slate-400 hover:text-slate-300 text-sm transition-colors"
+                className="text-purple-400 hover:text-purple-300 text-sm transition-colors"
               >
                 Already have an account? Login here
               </button>

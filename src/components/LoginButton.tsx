@@ -33,7 +33,7 @@ export const LoginButton: React.FC<LoginButtonProps> = ({ onLoginClick }) => {
   return (
     <button
       onClick={onLoginClick}
-      className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-medium rounded-full hover:from-green-600 hover:to-emerald-600 transition-all duration-200 transform hover:scale-105"
+      className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-medium rounded-full hover:from-blue-600 hover:to-purple-600 transition-all duration-200 transform hover:scale-105"
     >
       <LogIn className="w-4 h-4" />
       <span>Login</span>

@@ -64,14 +64,15 @@ export const Header: React.FC = () => {
         {isMobileMenuOpen && (
           <div className="md:hidden border-t border-slate-200 dark:border-slate-700 py-4 space-y-4">
             {!isLearnPage && (
-              <Link 
-                to="/learn"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="flex items-center space-x-2 px-4 py-3 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors duration-200"
+            <Link
+              to="/learn"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="flex justify-between items-center px-4 py-3 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors duration-200"
               >
-                <BookOpen className="w-4 h-4" />
-                <span>Learn Big O</span>
-              </Link>
+              <span>Learn Big O</span>
+              <BookOpen className="w-5 h-5" />
+            </Link>
+
             )}
             
             <div className="flex items-center justify-between px-4 py-2">
@@ -79,7 +80,8 @@ export const Header: React.FC = () => {
               <ThemeToggle />
             </div>
             
-            <div className="px-4">
+            <div className="flex items-center justify-between px-4 py-2">
+              <span className="text-slate-700 dark:text-slate-300 text-sm">Account?</span>
               <LoginButton onLoginClick={() => {
                 setShowAuthModal(true);
                 setIsMobileMenuOpen(false);
