@@ -29,7 +29,7 @@ export const LoginButton: React.FC<LoginButtonProps> = ({ onLoginClick }) => {
 
           <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent text-center mb-2">Welcome back</h2>
           <p className="text-center text-gray-600 mb-6">
-            Sign in to analyze your code
+            Sign in to free analyze your code
           </p>
 
           {/* Gradient style but same size as original */}
@@ -37,14 +37,14 @@ export const LoginButton: React.FC<LoginButtonProps> = ({ onLoginClick }) => {
             onClick={handleGoogleAuth}
             className="w-full py-2 mb-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-200 transform hover:scale-105"
           >
-            Log in
+            Log in with Google
           </button>
 
           <button
             onClick={() => alert('Sign up flow here')}
             className="w-full py-2 mb-3 bg-gradient-to-r from-blue-300 to-purple-300 text-black rounded-full font-medium hover:from-blue-500 hover:to-purple-500 transition-all duration-200 transform hover:scale-105"
           >
-            Sign up for free
+            Sign up with Google
           </button>
 
           <button
