@@ -3,7 +3,6 @@ import { BookOpen, Menu, X } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { ThemeToggle } from './ThemeToggle';
 import { LoginButton } from './LoginButton';
-import { AuthModal } from './AuthModal';
 
 export const Header: React.FC = () => {
   const location = useLocation();
@@ -90,11 +89,6 @@ export const Header: React.FC = () => {
           </div>
         )}
       </div>
-
-      <AuthModal 
-        isOpen={showAuthModal} 
-        onClose={() => setShowAuthModal(false)} 
-      />
     </header>
   );
 };
