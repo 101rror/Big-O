@@ -77,7 +77,7 @@ export const ComplexityAnalysis: React.FC<ComplexityAnalysisProps> = ({
           <div className="space-y-3">
             <div className="flex items-center space-x-2">
               <Clock className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-              <span className="font-medium text-slate-700 dark:text-slate-300 transition-colors duration-200">Time</span>
+              <span className="font-medium text-slate-700 dark:text-slate-300 transition-colors duration-200">Time Complexity</span>
             </div>
             <ComplexityBadge complexity={analysis.timeComplexity} type="time" />
           </div>
@@ -85,7 +85,7 @@ export const ComplexityAnalysis: React.FC<ComplexityAnalysisProps> = ({
           <div className="space-y-3">
             <div className="flex items-center space-x-2">
               <Database className="w-5 h-5 text-purple-600 dark:text-purple-400" />
-              <span className="font-medium text-slate-700 dark:text-slate-300 transition-colors duration-200">Space</span>
+              <span className="font-medium text-slate-700 dark:text-slate-300 transition-colors duration-200">Space Complexity</span>
             </div>
             <ComplexityBadge complexity={analysis.spaceComplexity} type="space" />
           </div>
