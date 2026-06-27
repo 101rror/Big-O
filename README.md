@@ -18,7 +18,7 @@ Big-O is a full-stack web application for analyzing the time and space complexit
 ## 1. Clone the repository
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/101rror/Big-O
 cd Big-O
 ```
 
