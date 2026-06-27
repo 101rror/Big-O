@@ -1,8 +1,15 @@
-import React from 'react';
-import { Clock, Database, TrendingUp, Lightbulb, Loader2, AlertCircle } from 'lucide-react';
-import { ComplexityBadge } from './ComplexityBadge';
-import { ComplexityVisualization } from './ComplexityVisualization';
-import type { AnalysisResult } from '../types/analysis';
+import React from "react";
+import {
+  Clock,
+  Database,
+  TrendingUp,
+  Lightbulb,
+  Loader2,
+  AlertCircle,
+} from "lucide-react";
+import { ComplexityBadge } from "./ComplexityBadge";
+import { ComplexityVisualization } from "./ComplexityVisualization";
+import type { AnalysisResult } from "../types/analysis";
 
 interface ComplexityAnalysisProps {
   analysis: AnalysisResult | null;
@@ -13,7 +20,7 @@ interface ComplexityAnalysisProps {
 export const ComplexityAnalysis: React.FC<ComplexityAnalysisProps> = ({
   analysis,
   isAnalyzing,
-  hasCode
+  hasCode,
 }) => {
   if (isAnalyzing) {
     return (
@@ -41,7 +48,8 @@ export const ComplexityAnalysis: React.FC<ComplexityAnalysisProps> = ({
               Ready to Analyze
             </h3>
             <p className="text-slate-600 dark:text-slate-400 transition-colors duration-200">
-              Paste your code and click "Analyze Code" to get instant complexity insights
+              Paste your code and click "Analyze Code" to get instant complexity
+              insights
             </p>
           </div>
         </div>
@@ -71,28 +79,37 @@ export const ComplexityAnalysis: React.FC<ComplexityAnalysisProps> = ({
     <div className="space-y-6">
       {/* Main Complexity Results */}
       <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 transition-colors duration-200">
-        <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-100 mb-6 transition-colors duration-200">Complexity Analysis</h2>
-        
+        <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-100 mb-6 transition-colors duration-200">
+          Complexity Analysis
+        </h2>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
           <div className="space-y-3">
             <div className="flex items-center space-x-2">
               <Clock className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-              <span className="font-medium text-slate-700 dark:text-slate-300 transition-colors duration-200">Time Complexity</span>
+              <span className="font-medium text-slate-700 dark:text-slate-300 transition-colors duration-200">
+                Time Complexity
+              </span>
             </div>
             <ComplexityBadge complexity={analysis.timeComplexity} type="time" />
           </div>
-          
+
           <div className="space-y-3">
             <div className="flex items-center space-x-2">
               <Database className="w-5 h-5 text-purple-600 dark:text-purple-400" />
-              <span className="font-medium text-slate-700 dark:text-slate-300 transition-colors duration-200">Space Complexity</span>
+              <span className="font-medium text-slate-700 dark:text-slate-300 transition-colors duration-200">
+                Space Complexity
+              </span>
             </div>
-            <ComplexityBadge complexity={analysis.spaceComplexity} type="space" />
+            <ComplexityBadge
+              complexity={analysis.spaceComplexity}
+              type="space"
+            />
           </div>
         </div>
 
         <div className="mt-12 mb-10">
-          <ComplexityVisualization 
+          <ComplexityVisualization
             timeComplexity={analysis.timeComplexity}
             spaceComplexity={analysis.spaceComplexity}
           />
@@ -103,19 +120,25 @@ export const ComplexityAnalysis: React.FC<ComplexityAnalysisProps> = ({
       <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 transition-colors duration-200">
         <div className="flex items-center space-x-2 mb-4">
           <Lightbulb className="w-5 h-5 text-yellow-500" />
-          <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-100 transition-colors duration-200">Analysis Explanation</h3>
+          <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-100 transition-colors duration-200">
+            Analysis Explanation
+          </h3>
         </div>
-        
+
         <div className="space-y-4">
           <div>
-            <h4 className="font-medium text-slate-700 dark:text-slate-300 mb-2 transition-colors duration-200">Time Complexity Breakdown</h4>
+            <h4 className="font-medium text-slate-700 dark:text-slate-300 mb-2 transition-colors duration-200">
+              Time Complexity Breakdown
+            </h4>
             <p className="text-slate-600 dark:text-slate-400 leading-relaxed transition-colors duration-200">
               {analysis.explanation.time}
             </p>
           </div>
-          
+
           <div>
-            <h4 className="font-medium text-slate-700 dark:text-slate-300 mb-2 transition-colors duration-200">Space Complexity Breakdown</h4>
+            <h4 className="font-medium text-slate-700 dark:text-slate-300 mb-2 transition-colors duration-200">
+              Space Complexity Breakdown
+            </h4>
             <p className="text-slate-600 dark:text-slate-400 leading-relaxed transition-colors duration-200">
               {analysis.explanation.space}
             </p>
@@ -123,12 +146,16 @@ export const ComplexityAnalysis: React.FC<ComplexityAnalysisProps> = ({
 
           {analysis.suggestions.length > 0 && (
             <div>
-              <h4 className="font-medium text-slate-700 dark:text-slate-300 mb-2 transition-colors duration-200">Optimization Suggestions</h4>
+              <h4 className="font-medium text-slate-700 dark:text-slate-300 mb-2 transition-colors duration-200">
+                Optimization Suggestions
+              </h4>
               <ul className="space-y-2">
                 {analysis.suggestions.map((suggestion, index) => (
                   <li key={index} className="flex items-start space-x-2">
                     <span className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></span>
-                    <span className="text-slate-600 dark:text-slate-400 transition-colors duration-200">{suggestion}</span>
+                    <span className="text-slate-600 dark:text-slate-400 transition-colors duration-200">
+                      {suggestion}
+                    </span>
                   </li>
                 ))}
               </ul>

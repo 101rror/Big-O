@@ -1,8 +1,5 @@
 export interface User {
-  id: string;
-  email: string;
-  isVerified: boolean;
-  createdAt: string;
+  username: string;
 }
 
 export interface AuthState {
@@ -12,13 +9,12 @@ export interface AuthState {
 }
 
 export interface LoginFormData {
-  email: string;
+  username: string;
+  password: string;
 }
 
-export interface VerificationFormData {
-  code: string;
-}
-
-export interface SubscriptionFormData {
-  email: string;
+export interface SignupFormData {
+  username: string;
+  password: string;
+  password2: string;
 }

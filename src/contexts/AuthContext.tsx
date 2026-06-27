@@ -1,12 +1,28 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import type { User, AuthState } from '../types/auth';
+import React, { createContext, useContext, useEffect, useState } from "react";
+import type { User, AuthState } from "../types/auth";
+import {
+  getStoredUser,
+  loginService,
+  logoutService,
+  registerService,
+  refreshTokenService,
+  fetchUserService,
+} from "../services/authService";
 
 interface AuthContextType extends AuthState {
-  login: (email: string) => Promise<{ success: boolean; needsVerification?: boolean; message?: string }>;
-  logout: () => void;
-  subscribe: (email: string) => Promise<{ success: boolean; message?: string }>;
-  verify: (code: string) => Promise<{ success: boolean; message?: string }>;
-  resendVerification: (email: string) => Promise<{ success: boolean; message?: string }>;
+  login: (
+    username: string,
+    password: string,
+  ) => Promise<{ success: boolean; message?: string }>;
+  register: (
+    username: string,
+    password: string,
+    password2: string,
+  ) => Promise<{ success: boolean; message?: string }>;
+  logout: () => Promise<void>;
+  openAuthModal: () => void;
+  closeAuthModal: () => void;
+  isAuthModalOpen: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -14,188 +30,112 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 };
 
-// Mock database - in real app, this would be a backend API
-const mockUsers: { [email: string]: { id: string; email: string; isVerified: boolean; verificationCode?: string; createdAt: string } } = {};
-const mockVerificationCodes: { [email: string]: string } = {};
-
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [authState, setAuthState] = useState<AuthState>({
     user: null,
     isAuthenticated: false,
-    isLoading: true
+    isLoading: true,
   });
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+
+  const initializeAuth = async () => {
+    const storedUser = getStoredUser();
+    if (!storedUser) {
+      setAuthState({ user: null, isAuthenticated: false, isLoading: false });
+      return;
+    }
+
+    try {
+      const user = await fetchUserService();
+      setAuthState({ user, isAuthenticated: true, isLoading: false });
+    } catch {
+      await refreshTokenService().catch(() => {
+        setAuthState({ user: null, isAuthenticated: false, isLoading: false });
+      });
+      setAuthState({
+        user: storedUser,
+        isAuthenticated: true,
+        isLoading: false,
+      });
+    }
+  };
 
   useEffect(() => {
-    // Check for existing session
-    const savedUser = localStorage.getItem('user');
-    if (savedUser) {
-      const user = JSON.parse(savedUser);
-      setAuthState({
-        user,
-        isAuthenticated: true,
-        isLoading: false
-      });
-    } else {
-      setAuthState(prev => ({ ...prev, isLoading: false }));
-    }
+    initializeAuth();
+
+    const handleAuthExpired = () => {
+      setAuthState({ user: null, isAuthenticated: false, isLoading: false });
+    };
+
+    window.addEventListener("authExpired", handleAuthExpired);
+    return () => window.removeEventListener("authExpired", handleAuthExpired);
   }, []);
 
-  const generateVerificationCode = (): string => {
-    return Math.random().toString().slice(2, 8).padStart(6, '0');
-  };
-
-  const subscribe = async (email: string): Promise<{ success: boolean; message?: string }> => {
+  const login = async (username: string, password: string) => {
     try {
-      // Check if user already exists
-      if (mockUsers[email]) {
-        return { success: false, message: 'Email already registered. Please login instead.' };
-      }
-
-      // Create new user
-      const verificationCode = generateVerificationCode();
-      mockUsers[email] = {
-        id: Math.random().toString(36).substr(2, 9),
-        email,
-        isVerified: false,
-        verificationCode,
-        createdAt: new Date().toISOString()
+      const user = await loginService({ username, password });
+      setAuthState({ user, isAuthenticated: true, isLoading: false });
+      return { success: true, message: "Login successful" };
+    } catch (error) {
+      return {
+        success: false,
+        message:
+          error instanceof Error
+            ? error.message
+            : "Login failed. Please try again.",
       };
-      
-      mockVerificationCodes[email] = verificationCode;
-
-      // Simulate sending email
-      console.log(`Verification code for ${email}: ${verificationCode}`);
-      
-      return { success: true, message: 'Verification code sent to your email!' };
-    } catch (error) {
-      return { success: false, message: 'Failed to subscribe. Please try again.' };
     }
   };
 
-  const login = async (email: string): Promise<{ success: boolean; needsVerification?: boolean; message?: string }> => {
+  const register = async (
+    username: string,
+    password: string,
+    password2: string,
+  ) => {
     try {
-      const user = mockUsers[email];
-      
-      if (!user) {
-        return { success: false, message: 'Email not found. Please subscribe first.' };
-      }
-
-      if (!user.isVerified) {
-        // Resend verification code
-        const verificationCode = generateVerificationCode();
-        mockUsers[email].verificationCode = verificationCode;
-        mockVerificationCodes[email] = verificationCode;
-        console.log(`Verification code for ${email}: ${verificationCode}`);
-        
-        return { 
-          success: false, 
-          needsVerification: true, 
-          message: 'Email not verified. Verification code sent to your email.' 
-        };
-      }
-
-      // Login successful
-      const userData: User = {
-        id: user.id,
-        email: user.email,
-        isVerified: user.isVerified,
-        createdAt: user.createdAt
+      await registerService({ username, password, password2 });
+      return { success: true, message: "Signup successful. Please log in." };
+    } catch (error) {
+      return {
+        success: false,
+        message:
+          error instanceof Error
+            ? error.message
+            : "Signup failed. Please check your details.",
       };
-
-      setAuthState({
-        user: userData,
-        isAuthenticated: true,
-        isLoading: false
-      });
-
-      localStorage.setItem('user', JSON.stringify(userData));
-      
-      return { success: true, message: 'Login successful!' };
-    } catch (error) {
-      return { success: false, message: 'Login failed. Please try again.' };
     }
   };
 
-  const verify = async (code: string): Promise<{ success: boolean; message?: string }> => {
+  const logout = async () => {
     try {
-      // Find user by verification code
-      const email = Object.keys(mockVerificationCodes).find(
-        email => mockVerificationCodes[email] === code
-      );
-
-      if (!email || !mockUsers[email]) {
-        return { success: false, message: 'Invalid verification code.' };
-      }
-
-      // Verify user
-      mockUsers[email].isVerified = true;
-      delete mockUsers[email].verificationCode;
-      delete mockVerificationCodes[email];
-
-      // Auto login after verification
-      const userData: User = {
-        id: mockUsers[email].id,
-        email: mockUsers[email].email,
-        isVerified: true,
-        createdAt: mockUsers[email].createdAt
-      };
-
-      setAuthState({
-        user: userData,
-        isAuthenticated: true,
-        isLoading: false
-      });
-
-      localStorage.setItem('user', JSON.stringify(userData));
-
-      return { success: true, message: 'Email verified successfully!' };
-    } catch (error) {
-      return { success: false, message: 'Verification failed. Please try again.' };
+      await logoutService();
+    } finally {
+      setAuthState({ user: null, isAuthenticated: false, isLoading: false });
     }
   };
 
-  const resendVerification = async (email: string): Promise<{ success: boolean; message?: string }> => {
-    try {
-      const user = mockUsers[email];
-      if (!user) {
-        return { success: false, message: 'Email not found.' };
-      }
-
-      const verificationCode = generateVerificationCode();
-      mockUsers[email].verificationCode = verificationCode;
-      mockVerificationCodes[email] = verificationCode;
-      
-      console.log(`New verification code for ${email}: ${verificationCode}`);
-      
-      return { success: true, message: 'Verification code resent to your email!' };
-    } catch (error) {
-      return { success: false, message: 'Failed to resend code. Please try again.' };
-    }
-  };
-
-  const logout = () => {
-    setAuthState({
-      user: null,
-      isAuthenticated: false,
-      isLoading: false
-    });
-    localStorage.removeItem('user');
-  };
+  const openAuthModal = () => setIsAuthModalOpen(true);
+  const closeAuthModal = () => setIsAuthModalOpen(false);
 
   return (
-    <AuthContext.Provider value={{
-      ...authState,
-      login,
-      logout,
-      subscribe,
-      verify,
-      resendVerification
-    }}>
+    <AuthContext.Provider
+      value={{
+        ...authState,
+        login,
+        register,
+        logout,
+        openAuthModal,
+        closeAuthModal,
+        isAuthModalOpen,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

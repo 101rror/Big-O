@@ -1,3 +1,10 @@
+export type SupportedLanguage =
+  | "c"
+  | "cpp"
+  | "python"
+  | "java"
+  | "javascript";
+
 export interface AnalysisResult {
   timeComplexity: string;
   spaceComplexity: string;
@@ -8,3 +15,10 @@ export interface AnalysisResult {
   suggestions: string[];
   confidence: number;
 }
+
+export interface AnalysisRequestPayload {
+  code: string;
+  language: SupportedLanguage;
+}
+
+export type AnalysisResponse = AnalysisResult;

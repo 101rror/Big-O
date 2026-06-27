@@ -1,5 +1,5 @@
 export const codeExamples = {
-  constant: `#include <iostream>
+    constant: `#include <iostream>
 #include <vector>
 
 int main() {
@@ -8,7 +8,7 @@ int main() {
     return 0;
 }`,
 
-  logarithmic: `int binarySearch(const std::vector<int>& array, int target) {
+    logarithmic: `int binarySearch(const std::vector<int>& array, int target) {
     int left = 0;
     int right = array.size() - 1;
 
@@ -26,7 +26,7 @@ int main() {
     return -1;
 }`,
 
-  linear: `int linearSearch(const std::vector<int>& arr, int target) {
+    linear: `int linearSearch(const std::vector<int>& arr, int target) {
     for (int i = 0; i < arr.size(); i++) {
         if (arr[i] == target)
             return i;
@@ -34,7 +34,7 @@ int main() {
     return -1;
 }`,
 
-  logLinear: `int linearSearch(const std::vector<int>& arr, int target) {
+    logLinear: `int linearSearch(const std::vector<int>& arr, int target) {
     for (int i = 0; i < arr.size(); i++) {
         if (arr[i] == target)
             return i;
@@ -42,7 +42,7 @@ int main() {
     return -1;
 }`,
 
-  quadratic: `std::vector<int> bubbleSort(std::vector<int> arr) {
+    quadratic: `std::vector<int> bubbleSort(std::vector<int> arr) {
     int n = arr.size();
 
     for (int i = 0; i < n; i++) {
@@ -55,7 +55,7 @@ int main() {
     return arr;
 }`,
 
-  exponential: `#include <vector>
+    exponential: `#include <vector>
 #include <cmath>
 #include <limits>
 
@@ -102,7 +102,7 @@ std::pair<std::vector<int>, double> tsp(const std::vector<City>& cities) {
     return {shortestTour, shortestLength};
 }`,
 
-  factorial: `#include <vector>
+    factorial: `#include <vector>
 #include <algorithm>
 #include <limits>
 
@@ -141,5 +141,5 @@ std::vector<int> travelingSalesmanProblem(const std::vector<std::vector<int>>& g
     permute(vertices, 0, n - 2);
 
     return minPath;
-}`
+}`,
 };

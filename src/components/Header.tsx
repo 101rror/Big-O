@@ -1,12 +1,14 @@
-import React from 'react';
-import { BookOpen, Menu, X } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
-import { ThemeToggle } from './ThemeToggle';
-import { LoginButton } from './LoginButton';
+import React from "react";
+import { BookOpen, Menu, X, User } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import { ThemeToggle } from "./ThemeToggle";
+import { LoginButton } from "./LoginButton";
+import { useAuth } from "../contexts/AuthContext";
 
 export const Header: React.FC = () => {
+  const { isAuthenticated } = useAuth();
   const location = useLocation();
-  const isLearnPage = location.pathname === '/learn';
+  const isLearnPage = location.pathname === "/learn";
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 
@@ -44,6 +46,7 @@ export const Header: React.FC = () => {
                 <span>Learn Big O</span>
               </Link>
             )}
+            {/* Removed duplicate Profile button — profile accessible via account button */}
             <ThemeToggle />
             <LoginButton />
           </div>
@@ -53,7 +56,11 @@ export const Header: React.FC = () => {
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="md:hidden p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors duration-200"
           >
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isMobileMenuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
           </button>
         </div>
 
@@ -71,13 +78,19 @@ export const Header: React.FC = () => {
               </Link>
             )}
 
+            {/* Removed mobile Profile menu item — profile accessible via account button */}
+
             <div className="flex items-center justify-between px-4 py-2">
-              <span className="text-slate-700 dark:text-slate-300 text-sm">Theme</span>
+              <span className="text-slate-700 dark:text-slate-300 text-sm">
+                Theme
+              </span>
               <ThemeToggle />
             </div>
 
             <div className="flex items-center justify-between px-4 py-2">
-              <span className="text-slate-700 dark:text-slate-300 text-sm">Account?</span>
+              <span className="text-slate-700 dark:text-slate-300 text-sm">
+                Account?
+              </span>
               <LoginButton />
             </div>
           </div>

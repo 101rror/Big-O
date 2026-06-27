@@ -1,19 +1,15 @@
-import type { AnalysisResult } from '../types/analysis';
-import { analyzeCodeWithOpenAI } from './openaiService';
+import type { AnalysisResult } from "../types/analysis";
+import { analyzeCode } from "../api/analysisApi";
 
-export const analyzeComplexity = async (code: string, language: string): Promise<AnalysisResult> => {
+export const analyzeComplexity = async (
+  code: string,
+  language: string,
+): Promise<AnalysisResult> => {
   try {
-    const result = await analyzeCodeWithOpenAI(code, language);
-    
-    return {
-      timeComplexity: result.timeComplexity,
-      spaceComplexity: result.spaceComplexity,
-      explanation: result.explanation,
-      suggestions: result.suggestions,
-      confidence: result.confidence
-    };
+    const result = await analyzeCode({ code, language });
+    return result as AnalysisResult;
   } catch (error) {
-    console.error('Complexity analysis failed:', error);
+    console.error("Complexity analysis failed:", error);
     throw error;
   }
 };
